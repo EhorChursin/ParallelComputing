@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <cstdlib>
 #include "time.h"
+#include <omp.h>
 
 
 void saveMatrixToFile(const std::vector<std::vector<int>>& matrix, const std::string& filename) {
@@ -50,9 +51,14 @@ std::vector<std::vector<int>> matrixMultOpenMP(const std::vector<std::vector<int
 
     std::vector<std::vector<int>> result(rows1, std::vector<int>(cols2, 0));
 
-#pragma omp parallel num_threads(4)
-    {
-#pragma omp for collapse(2)
+    int threads;
+    omp_set_num_threads(4);
+    #pragma omp parallel shared(threads)
+        {
+            threads = omp_get_num_threads();
+
+    #pragma for mp parallel shared(threads)
+
         for (int i = 0; i < rows1; i++) {
             for (int j = 0; j < cols2; j++) {
                 for (int k = 0; k < cols1; k++) {
