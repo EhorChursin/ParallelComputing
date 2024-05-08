@@ -51,19 +51,15 @@ std::vector<std::vector<int>> matrixMultOpenMP(const std::vector<std::vector<int
 
     std::vector<std::vector<int>> result(rows1, std::vector<int>(cols2, 0));
 
-    int threads;
-    omp_set_num_threads(4);
-    #pragma omp parallel shared(threads)
-        {
-            threads = omp_get_num_threads();
+    int threadsNum = 4;
+    omp_set_num_threads(threadsNum);
 
-    #pragma for mp parallel shared(threads)
+#pragma omp parallel for shared(m1, m2, result) 
 
-        for (int i = 0; i < rows1; i++) {
-            for (int j = 0; j < cols2; j++) {
-                for (int k = 0; k < cols1; k++) {
-                    result[i][j] += m1[i][k] * m2[k][j];
-                }
+    for (int i = 0; i < rows1; i++) {
+        for (int j = 0; j < cols2; j++) {
+            for (int k = 0; k < cols1; k++) {
+                result[i][j] += (m1[i][k] * m2[k][j]);
             }
         }
     }
@@ -86,7 +82,7 @@ void saveResult(const std::vector<std::vector<int>>& matrix, const double& time,
     }
 
     file << "\n";
-    file << "Calculation time on 4 threads: " << time << " seconds." << std::endl;
+    file << "Calculation time: " << time << " seconds." << std::endl;
     file << "Number of multiplication operations: " << volume << std::endl;
     file << "Number of saves to memory: " << volume << std::endl;
     file << "Number of downloads from memory: " << 2 * volume << std::endl;
