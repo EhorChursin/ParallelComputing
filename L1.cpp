@@ -75,16 +75,15 @@ void saveResult(const std::vector<std::vector<int>>& matrix, const double& time,
     }
 
     file << "\n";
-    file << "Время вычислений: " << time << " секунд." << std::endl;
-    file << "Количество операций умножения: " << volume << std::endl;
-    file << "Количество сохранений в память: " << volume << std::endl;
-    file << "Количество загрузок из памяти: " << 2*volume << std::endl;
+    file << "Calculation time: " << time << " seconds." << std::endl;
+    file << "Number of multiplication operations: " << volume << std::endl;
+    file << "Number of saves to memory: " << volume << std::endl;
+    file << "Number of downloads from memory: " << 2*volume << std::endl;
     file.close();
 }
 
 int main() {
 
-    setlocale(LC_ALL, "Russian");
     srand(time(nullptr));
 
     bool SaveToFile = false;
@@ -136,7 +135,7 @@ int main() {
         //printMatrix(m2);
         //printMatrix(result);
 
-        std::cout << std::endl << "Calculation time: " << time << " seconds" << std::endl;
+        std::cout << std::endl << "Calculation time: " << time << " seconds." << std::endl;
 
         return 0;
     }
